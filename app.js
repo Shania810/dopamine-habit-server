@@ -8,10 +8,10 @@ import connectDB from './db/db.config.js'
 connectDB()
 import authRoutes from './routes/auth.route.js'
 app.use('/',authRoutes)
+import challengeRoutes from './routes/challenge.route.js'
+app.use('/',challengeRoutes)
 import auth from "./middlewares/auth.middleware.js";
 app.use(auth)
 import habitRoutes from './routes/habit.route.js'
 app.use('/',habitRoutes)
-import challengeRoutes from './routes/challenge.route.js'
-app.use('/',challengeRoutes)
 export default app

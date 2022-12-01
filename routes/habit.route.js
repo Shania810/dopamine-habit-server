@@ -24,7 +24,7 @@ router.delete('/habit/:id',async(req,res,next)=>{
     const {id} = req.params
     const user = req.user
    try {
-    await Habit.findOneAndDelete({_id:id,user: req.user.id})
+    await Habit.findOneAndDelete({_id:id,user: user.id})
     res.status(200).json({message:'successfully deleted'})
    } catch (error) {
     next(error)
