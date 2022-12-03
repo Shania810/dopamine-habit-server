@@ -2,10 +2,15 @@ import { Router } from "express";
 import User from "../models/user.model.js";
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
+import uploadCloud from "../config/cloudinary.config.js";
 const router = Router()
 
-router.post('/signup',async(req,res,next)=>{
-    const {username,email,password} = req.body
+router.post('/signup',
+uploadCloud.single('image')
+,async(req,res,next)=>{
+    const {username,email,password,imageURl} = req.body
+    console.log(imageURl)
+    
     if(!username || !email || !password){
         res.status(400).json({message:'Provide username,email and password'})
         return
