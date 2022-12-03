@@ -12,6 +12,8 @@ import challengeRoutes from './routes/challenge.route.js'
 app.use('/',challengeRoutes)
 import auth from "./middlewares/auth.middleware.js";
 app.use(auth)
+import userRoutes from './routes/edit.user.route.js'
+app.use('/',userRoutes)
 import habitRoutes from './routes/habit.route.js'
 app.use('/',habitRoutes)
 export default app
