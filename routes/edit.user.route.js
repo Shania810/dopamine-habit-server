@@ -7,7 +7,7 @@ router.get('/user',async(req,res,next)=>{
   const user = req.user
   try {
     const foundedUser = await User.findById(user.id)
-    res.status(200).json({ username: foundedUser.username,imageURL: foundedUser.imageURL})
+    res.status(200).json({ username: foundedUser.username,imageURL: foundedUser.imageURL,email:foundedUser.email})
   } catch (error) {
     next(error)
   }
