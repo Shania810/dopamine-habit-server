@@ -3,7 +3,15 @@ import uploadCloud from "../config/cloudinary.config.js";
 import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs'
 const router = Router()
-
+router.get('/user',async(req,res,next)=>{
+  const user = req.user
+  try {
+    const foundedUser = await User.findById(user.id)
+    res.status(200).json({ username: foundedUser.username,imageURL: foundedUser.imageURL})
+  } catch (error) {
+    next(error)
+  }
+})
 router.put('/user/upload-image',uploadCloud.single('image'),async(req,res,next)=>{
   const {id} = req.user
   try {
