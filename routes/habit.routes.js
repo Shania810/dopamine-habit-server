@@ -20,6 +20,17 @@ router.get('/habit',async(req,res,next)=>{
         next(error)
     }
 })
+router.put('/habit/:id',async(req,res,next)=>{
+   const {id} = req.params
+   const user = req.user
+   const update = req.body
+   try {
+    await Habit.updateOne({_id: id,user: user.id},update)
+    res.status(200).json({message:'sucessfully updated'})
+   } catch (error) {
+    next(error)
+   }
+})
 router.delete('/habit/:id',async(req,res,next)=>{
     const {id} = req.params
     const user = req.user
