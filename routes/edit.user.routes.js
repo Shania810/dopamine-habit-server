@@ -6,8 +6,8 @@ const router = Router()
 router.get('/user',async(req,res,next)=>{
   const user = req.user
   try {
-    const foundedUser = await User.findById(user.id)
-    res.status(200).json({ username: foundedUser.username,imageURL: foundedUser.imageURL,email:foundedUser.email})
+    const foundUser = await User.findById(user.id)
+    res.status(200).json({ username: foundUser.username,imageURL: foundUser.imageURL,email:foundUser.email})
   } catch (error) {
     next(error)
   }
