@@ -38,6 +38,7 @@ router.put('/analysis/habits',async(req,res,next)=>{
       await Analysis.updateOne({user: id},{$push:{ habits: habits[i]._id}})
     }
     const analysis = await Analysis.find({user: id})
+    await analysis[0].populate('habits')
     res.status(200).json(analysis)
   } catch (error) {
     next(error)
