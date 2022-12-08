@@ -33,10 +33,11 @@ router.put('/analysis',async(req,res,next)=>{
 router.put('/analysis/habits',async(req,res,next)=>{
   const habits = req.body
   const {id} = req.user
+  habits.forEach((habit) => {
+    console.log(habit)   
+  })
   try {
-    habits.forEach(async(habit) => {
-      await Analysis.updateOne({user: id},{$push:{habits: habit._id}})      
-    });
+   console.log(habits)
     const analysis = await Analysis.find({user: id})
     res.status(200).json(analysis)
   } catch (error) {
