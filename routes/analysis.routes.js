@@ -30,4 +30,17 @@ router.put('/analysis',async(req,res,next)=>{
     next(error)
    } 
 })
+router.put('/analysis/habits',async(req,res,next)=>{
+  const habits = req.body
+  const {id} = req.user
+  try {
+    habits.forEach(async(habit) => {
+      await Analysis.updateOne({user: id},{$push:{habits: habit._id}})      
+    });
+    const analysis = await Analysis.find({user: id})
+    res.status(200).json(analysis)
+  } catch (error) {
+    next(error)
+  }
+})
 export default router
