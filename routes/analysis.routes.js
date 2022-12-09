@@ -4,7 +4,7 @@ import Analysis from '../models/analysis.model.js'
 router.get('/analysis',async(req,res,next)=>{
  const {id} = req.user
   try {
-    const analysis = await Analysis.find({user: id})
+    const analysis = await Analysis.find({user: id}).populate('habits')
     res.status(200).json(analysis)
   } catch (error) {
     next(error)
