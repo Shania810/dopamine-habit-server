@@ -5,10 +5,10 @@ import Analysis from '../models/analysis.model.js'
 router.get('/analysis', async (req, res, next) => {
   const { id } = req.user
   try {
-    const analysis = await Analysis.findOne({ user: id }).populate('habits')
-    analysis.habits.map((habit) => {
-      const duration = new Date() - habit.created_at
-      habit.duration = duration
+    const analysis = await Analysis.findOne({ user: id }).populate('habits').lean()
+    analysis.habits.forEach((habit) =>{
+    const duration = new Date() - habit.createdAt
+    habit.duration = Math.floor( duration / 1000 / 60 / 60 / 24 )
     })
     res.status(200).json(analysis)
   } catch (error) {

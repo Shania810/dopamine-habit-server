@@ -20,4 +20,5 @@ const habitSchema = new Schema(
   },
   { timestamps: true }
 )
+habitSchema.set('toObject',{virtuals: true})
 export default model('Habit', habitSchema)
