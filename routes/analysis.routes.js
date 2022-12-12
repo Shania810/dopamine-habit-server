@@ -40,16 +40,17 @@ router.put('/analysis/:id', async (req, res, next) => {
     next(error)
   }
 })
-router.put('/analysis/habits', async (req, res, next) => {
+router.put('/analysis/habits/:id', async (req, res, next) => {
   const habits = req.body
-  const { id } = req.user
+  const user = req.user
+  const {id} = req.params
   try {
     const habitsId = habits.map((habit)=> habit._id)
     await Analysis.updateOne(
-      {user: id},
+      {user: user.id,_id: id },
       {$push: { habits: {$each : habitsId }}}
     )
-    const analysis = await Analysis.findOne({ user: id }).populate('habits')
+    const analysis = await Analysis.findOne({ user: user.id}).populate('habits')
     res.status(200).json(analysis)
   } catch (error) {
     next(error)
