@@ -5,7 +5,18 @@ import Analysis from '../models/analysis.model.js'
 router.get('/analysis', async (req, res, next) => {
   const { id } = req.user
   try {
-    const analysis = await Analysis.findOne({ user: id }).populate('habits').lean()
+    const analysis = await Analysis.find({ user: id }).populate('habits')
+    res.status(200).json(analysis)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/analysis/:id', async (req, res, next) => {
+  const user = req.user
+  const {id} = req.params
+  try {
+    const analysis = await Analysis.findOne({ user: user.id,_id:id}).populate('habits').lean()
     const durationAnalysis = new Date () - duration.createdAt
     analysis.duration = Math.floor(durationAnalysis / 1000 / 60 / 60 / 24)
     analysis.habits.forEach((habit) =>{
