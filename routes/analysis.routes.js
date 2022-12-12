@@ -6,6 +6,8 @@ router.get('/analysis', async (req, res, next) => {
   const { id } = req.user
   try {
     const analysis = await Analysis.findOne({ user: id }).populate('habits').lean()
+    const durationAnalysis = new Date () - duration.createdAt
+    analysis.duration = Math.floor(durationAnalysis / 1000 / 60 / 60 / 24)
     analysis.habits.forEach((habit) =>{
     const duration = new Date() - habit.createdAt
     habit.duration = Math.floor( duration / 1000 / 60 / 60 / 24 )
@@ -41,12 +43,6 @@ router.put('/analysis/habits', async (req, res, next) => {
   const habits = req.body
   const { id } = req.user
   try {
-    /*for (let i = 0; i < habits.length; i++) {
-      await Analysis.updateOne(
-        { user: id },
-        { $push: { habits: habits[i]._id } }
-      )
-    }*/
     const habitsId = habits.map((habit)=> habit._id)
     await Analysis.updateOne(
       {user: id},
