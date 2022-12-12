@@ -14,7 +14,7 @@ const habitSchema = new Schema(
       trim: true,
       lowercase: true,
     },
-    completed:{type:Boolean,default: false },
+    completed:{type:Boolean, default: false },
     frequency: { type: String, lowercase: true },
     days_completed: { type: Number, default: 0, max:[7,'must be at least 7']},
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
