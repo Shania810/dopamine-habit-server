@@ -41,14 +41,18 @@ router.put('/analysis/habits', async (req, res, next) => {
   const habits = req.body
   const { id } = req.user
   try {
-    for (let i = 0; i < habits.length; i++) {
+    /*for (let i = 0; i < habits.length; i++) {
       await Analysis.updateOne(
         { user: id },
         { $push: { habits: habits[i]._id } }
       )
-    }
-    const analysis = await Analysis.find({ user: id })
-    await analysis[0].populate('habits')
+    }*/
+    const habitsId = habits.map((habit)=> habit._id)
+    await Analysis.updateOne(
+      {user: id},
+      {$push: { habits: {$each : habitsId }}}
+    )
+    const analysis = await Analysis.findOne({ user: id }).populate('habits')
     res.status(200).json(analysis)
   } catch (error) {
     next(error)
