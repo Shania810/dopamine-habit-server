@@ -29,11 +29,12 @@ router.post('/analysis', async (req, res, next) => {
   }
 })
 
-router.put('/analysis', async (req, res, next) => {
+router.put('/analysis/:id', async (req, res, next) => {
   const update = req.body
-  const { id } = req.user
+  const user = req.user
+  const {id} = req.params
   try {
-    const updatedAnalysis = await Analysis.updateOne({ user: id }, { update })
+    const updatedAnalysis = await Analysis.updateOne({ user: user.id ,_id:id}, { update })
     res.status(200).json(updatedAnalysis)
   } catch (error) {
     next(error)
