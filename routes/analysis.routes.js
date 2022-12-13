@@ -7,7 +7,7 @@ router.get('/analysis', async (req, res, next) => {
   try {
     const analyses = await Analysis.find({ user: id }).populate('habits').lean()
     analyses.forEach((analysis)=>{
-      const durationAnalysis = new Date() - analysis.createdAt
+      const durationAnalysis = analysis.updatedAt - analysis.createdAt
       analysis.duration =  Math.floor( durationAnalysis / 1000 / 60 / 60 / 24 )
     })
     res.status(200).json(analyses)
@@ -21,7 +21,7 @@ router.get('/analysis/:id', async (req, res, next) => {
   const {id} = req.params
   try {
     const analysis = await Analysis.findOne({ user: user.id,_id:id}).populate('habits').lean()
-    const durationAnalysis = new Date () - duration.createdAt
+    const durationAnalysis = new Date() - duration.createdAt
     analysis.duration = durationAnalysis
     analysis.habits.forEach((habit) =>{
     const duration = new Date() - habit.createdAt
