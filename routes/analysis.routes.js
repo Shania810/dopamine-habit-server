@@ -10,9 +10,9 @@ router.get('/analysis', async (req, res, next) => {
       const durationAnalysis = analysis.updatedAt - analysis.createdAt
       analysis.duration =  Math.floor( durationAnalysis / 1000 / 60 / 60 / 24 )
     })
-    /*analyses.habits.forEach((habit) =>{
+    analyses.habits.forEach((habit) =>{
       habit.completed = false
-      })*/
+      })
     res.status(200).json(analyses)
   } catch (error) {
     next(error)
