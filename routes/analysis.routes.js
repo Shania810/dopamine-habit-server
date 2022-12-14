@@ -6,15 +6,19 @@ router.get('/analysis', async (req, res, next) => {
   const { id } = req.user
   try {
     const analyses = await Analysis.find({ user: id }).populate('habits').lean()
+    if(analyses.length === 0){
+      res.status(200).json(analyses)
+    }else{
     const lastAnalysis = analyses[analyses.length - 1]
     const durationAnalysis = new Date() - lastAnalysis.createdAt
     lastAnalysis.duration =  Math.floor( durationAnalysis / 1000 / 60 / 60 / 24 )
-    /*lastAnalysis.habits.forEach((habit)=>{
+    lastAnalysis.habits.forEach((habit)=>{
       const duration = new Date() - habit.createdAt
       habit.duration = duration
       habit.completed = false
-    })*/
+    })
     res.status(200).json(analyses)
+  }
   } catch (error) {
     next(error)
   }
